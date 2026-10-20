@@ -11,8 +11,9 @@ DECLARE
   v_seller_4 UUID;
   v_seller_5 UUID;
   v_seller_6 UUID;
+  v_seller_7 UUID;
 BEGIN
-  -- 1. 판매자 프로필 6명 등록 (가명 닉네임, 아바타, 매너온도)
+  -- 1. 판매자 프로필 7명 등록 (가명 닉네임, 아바타, 매너온도)
   INSERT INTO public.profiles (nickname, avatar_url, region_name, is_verified, manner_temp)
   VALUES ('연남사과맨', 'https://api.dicebear.com/7.x/bottts/svg?seed=apple&backgroundColor=fdfbf7', '역삼1동', true, 99.0)
   RETURNING id INTO v_seller_1;
@@ -37,7 +38,11 @@ BEGIN
   VALUES ('진짜감자농부', 'https://api.dicebear.com/7.x/bottts/svg?seed=potatoKing&backgroundColor=fdfbf7', '개포2동', true, 99.9)
   RETURNING id INTO v_seller_6;
 
-  -- 2. 초기 상품 6개 등록
+  INSERT INTO public.profiles (nickname, avatar_url, region_name, is_verified, manner_temp)
+  VALUES ('댕냥이행복', 'https://api.dicebear.com/7.x/bottts/svg?seed=petlover&backgroundColor=fdfbf7', '삼성동', true, 88.5)
+  RETURNING id INTO v_seller_7;
+
+  -- 2. 초기 상품 7개 등록
   INSERT INTO public.products (seller_id, title, category, price, is_free_share, location, status, image_url, description, like_count, created_at)
   VALUES 
     (
@@ -117,5 +122,18 @@ BEGIN
       '부모님이 강원도 밭에서 직접 농사지어 보내주신 신선한 고랭지 햇감자입니다. 분이 팍팍 나고 쪄 먹으면 아주 고소하고 달콤합니다! 감자전이나 조림용으로 최고입니다. 박스째 드려요.',
       38,
       NOW() - INTERVAL '2 days'
+    ),
+    (
+      v_seller_7,
+      '원목 캣타워 & 푹신한 강아지 마약방석 세트',
+      '반려동물 용품',
+      32000,
+      false,
+      '서울시 강남구 삼성동',
+      '판매중',
+      'https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?w=800&auto=format&fit=crop&q=80',
+      '인테리어와 잘 어울리는 자작나무 원목 캣타워와 거의 사용하지 않은 푹신한 대형 강아지/고양이 방석입니다. 깨끗하게 세탁 및 소독 완료했습니다. 삼성역 부근 직거래 원합니다.',
+      16,
+      NOW() - INTERVAL '3 hours'
     );
 END $$;

@@ -160,6 +160,25 @@
       },
       likeCount: 38,
       isLiked: false
+    },
+    {
+      id: 7,
+      title: "원목 캣타워 & 푹신한 강아지 마약방석 세트",
+      category: "반려동물 용품",
+      price: 32000,
+      location: "서울시 강남구 삼성동",
+      timeAgo: "3시간 전",
+      status: "판매중",
+      image: "https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?w=800&auto=format&fit=crop&q=80",
+      description: "인테리어와 잘 어울리는 자작나무 원목 캣타워와 거의 사용하지 않은 푹신한 대형 강아지/고양이 방석입니다. 깨끗하게 세탁 및 소독 완료했습니다. 삼성역 부근 직거래 원합니다.",
+      seller: {
+        nickname: "댕냥이행복",
+        avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=petlover&backgroundColor=fdfbf7",
+        location: "삼성동",
+        mannerTemp: 88.5
+      },
+      likeCount: 16,
+      isLiked: false
     }
   ];
 
