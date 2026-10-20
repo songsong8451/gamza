@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자(Gamza) - 상품 상세 팝업 테스트</title>
+  <!-- 상세 모달 스타일 -->
+  <link rel="stylesheet" href="./product-detail.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", sans-serif;
+      background-color: #FAF6F0;
+      color: #372F2B;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .demo-header {
+      max-width: 800px;
+      margin: 0 auto 32px;
+      text-align: center;
+    }
+    .demo-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #8B5A2B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .demo-desc {
+      color: #8C7F78;
+      font-size: 15px;
+    }
+    .test-cards-grid {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .test-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE6DD;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(84, 48, 20, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .test-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(84, 48, 20, 0.12);
+      border-color: #C87941;
+    }
+    .test-card-tag {
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .test-card-tag.sale { background: #E8F6F4; color: #2A9D8F; }
+    .test-card-tag.reserved { background: #FDEEE9; color: #E76F51; }
+    .test-card-tag.sold { background: #EFEFEF; color: #7A7470; }
+    .test-card-tag.free { background: #FFF4E5; color: #D97724; }
+    .test-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2C2420;
+      line-height: 1.4;
+    }
+    .test-card-price {
+      font-size: 17px;
+      font-weight: 800;
+      color: #C87941;
+    }
+    .test-card-btn {
+      margin-top: auto;
+      padding: 10px;
+      background: #FAF0E6;
+      color: #8B5A2B;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .test-card:hover .test-card-btn {
+      background: #C87941;
+      color: #FFFFFF;
+    }
+    .event-log-panel {
+      max-width: 800px;
+      margin: 32px auto 0;
+      background: #2C2420;
+      color: #EFE7DE;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .event-log-title {
+      color: #F4A261;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="demo-header">
+    <h1 class="demo-title"><span>🥔</span> 감자 마켓 - 화면 2: 상세 팝업 테스트</h1>
+    <p class="demo-desc">아래의 테스트 카드를 클릭하여 상세 모달의 레이아웃, 애니메이션, 감자 지수 및 인터랙션을 확인하세요.</p>
+  </header>
+
+  <div class="test-cards-grid">
+    <!-- 테스트 케이스 1: 감자왕의 햇감자 (판매중, 99℃) -->
+    <div class="test-card" id="card-1">
+      <span class="test-card-tag sale">판매중</span>
+      <h3 class="test-card-title">강원도 춘천 햇감자 10kg (포슬포슬 분나는 수미감자)</h3>
+      <div class="test-card-price">18,000원</div>
+      <button type="button" class="test-card-btn">상세 팝업 열기 🔍</button>
+    </div>
+
+    <!-- 테스트 케이스 2: 아이패드 에어 (예약중, 62.5℃) -->
+    <div class="test-card" id="card-2">
+      <span class="test-card-tag reserved">예약중</span>
+      <h3 class="test-card-title">아이패드 에어 5세대 64GB WiFi 스타라이트 풀박스</h3>
+      <div class="test-card-price">520,000원</div>
+      <button type="button" class="test-card-btn">상세 팝업 열기 🔍</button>
+    </div>
+
+    <!-- 테스트 케이스 3: 무료 나눔 (36.5℃ 기본 온도) -->
+    <div class="test-card" id="card-3">
+      <span class="test-card-tag free">무료나눔</span>
+      <h3 class="test-card-title">원목 미니 사이드 테이블 무료 나눔합니다 (직거래)</h3>
+      <div class="test-card-price">무료나눔</div>
+      <button type="button" class="test-card-btn">상세 팝업 열기 🔍</button>
+    </div>
+
+    <!-- 테스트 케이스 4: 거래 완료 (75℃) -->
+    <div class="test-card" id="card-4">
+      <span class="test-card-tag sold">거래완료</span>
+      <h3 class="test-card-title">드롱기 빈티지 전기포트 올리브그린</h3>
+      <div class="test-card-price">45,000원</div>
+      <button type="button" class="test-card-btn">상세 팝업 열기 🔍</button>
+    </div>
+  </div>
+
+  <div class="event-log-panel">
+    <div class="event-log-title">📡 감자 이벤트 모니터링 로그</div>
+    <div id="log-output">이벤트 대기 중...</div>
+  </div>
+
+  <!-- 상세 모달 스크립트 (모달 마크업 자동 주입 지원) -->
+  <script src="./product-detail.js"></script>
+
+  <script>
+    const sampleProducts = [
+      {
+        id: 1,
+        title: '강원도 춘천 햇감자 10kg (포슬포슬 분나는 수미감자)',
+        category: '식품/농산물',
+        price: 18000,
+        location: '강원도 춘천시 퇴계동',
+        timeAgo: '10분 전',
+        status: '판매중',
+        image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&auto=format&fit=crop&q=80',
+        description: '강원도 춘천 밭에서 직접 캐낸 싱싱하고 포슬포슬한 햇감자입니다!\n쪄서 설탕이나 소금 찍어 먹어도 기가 막히고, 감자전이나 된장찌개에 넣어도 최고예요.\n\n- 품종: 강원도 수미감자\n- 수량: 10kg 박스 포장\n- 거래 희망 장소: 퇴계동 주민센터 앞 또는 남춘천역 인근 직거래 선호합니다.\n\n정성스레 캐서 보내드리니 편하게 문의주세요! 🥔❤️',
+        seller: {
+          name: '감자왕김감자',
+          location: '춘천시 퇴계동',
+          temperature: 99.0,
+          temperatureLabel: '따뜻한 감자 99℃'
+        },
+        liked: false,
+        likeCount: 18
+      },
+      {
+        id: 2,
+        title: '아이패드 에어 5세대 64GB WiFi 스타라이트 풀박스',
+        category: '디지털기기',
+        price: 520000,
+        location: '서울시 강남구 역삼동',
+        timeAgo: '30분 전',
+        status: '예약중',
+        image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop&q=80',
+        description: '구매 후 케이스와 강화유리 필름을 항상 부착하여 기스 없이 깨끗합니다.\n배터리 효율 98%이고 충전기, 케이블 등 구성품 모두 보관 중입니다.\n현재 예약자분이 계시며 예약 취소 시 순서대로 연락드리겠습니다.',
+        seller: {
+          name: '얼리어답터감자',
+          location: '강남구 역삼동',
+          temperature: 62.5,
+          temperatureLabel: '따뜻한 감자 62.5℃'
+        },
+        liked: true,
+        likeCount: 42
+      },
+      {
+        id: 3,
+        title: '원목 미니 사이드 테이블 무료 나눔합니다 (직거래)',
+        category: '가구/인테리어',
+        price: 0,
+        isFree: true,
+        location: '서울시 서초구 서초동',
+        timeAgo: '1시간 전',
+        status: '판매중',
+        image: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=600&auto=format&fit=crop&q=80',
+        description: '이사 일정으로 인해 가구를 정리하면서 필요하신 분께 나눔합니다.\n약간의 생활 스크래치는 있으나 사용하시는데 전혀 지장 없습니다.\n부피가 있어 서초역 인근 직접 오셔서 가져가실 분만 연락 부탁드립니다.',
+        seller: {
+          name: '나눔요정감자',
+          location: '서초구 서초동',
+          temperature: 36.5,
+          temperatureLabel: '포근한 감자 36.5℃'
+        },
+        liked: false,
+        likeCount: 9
+      },
+      {
+        id: 4,
+        title: '드롱기 빈티지 전기포트 올리브그린',
+        category: '생활가전',
+        price: 45000,
+        location: '서울시 송파구 잠실동',
+        timeAgo: '1일 전',
+        status: '거래 완료',
+        image: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=600&auto=format&fit=crop&q=80',
+        description: '주방 인테리어용으로 훌륭한 드롱기 아이코나 빈티지 전기포트입니다.\n좋은 분께 안전하게 거래 완료되었습니다. 감사합니다!',
+        seller: {
+          name: '잠실댁포테이토',
+          location: '송파구 잠실동',
+          temperature: 75.0,
+          temperatureLabel: '따뜻한 감자 75℃'
+        },
+        liked: false,
+        likeCount: 15
+      }
+    ];
+
+    const logOutput = document.getElementById('log-output');
+    function log(message) {
+      const time = new Date().toLocaleTimeString();
+      logOutput.innerHTML = `[${time}] ${message}<br>` + logOutput.innerHTML;
+    }
+
+    // 카드 클릭 이벤트 바인딩
+    document.getElementById('card-1').addEventListener('click', () => {
+      window.GamzaDetail.open(sampleProducts[0]);
+    });
+    document.getElementById('card-2').addEventListener('click', () => {
+      window.GamzaDetail.open(sampleProducts[1]);
+    });
+    document.getElementById('card-3').addEventListener('click', () => {
+      window.GamzaDetail.open(sampleProducts[2]);
+    });
+    document.getElementById('card-4').addEventListener('click', () => {
+      window.GamzaDetail.open(sampleProducts[3]);
+    });
+
+    // 글로벌 커스텀 이벤트 리스닝
+    window.addEventListener('gamza:detail:open', (e) => {
+      log(`👉 [gamza:detail:open] 상품 열림 - "${e.detail.product.title}" (${e.detail.product.price}원, 판매자: ${e.detail.product.seller.name})`);
+    });
+
+    window.addEventListener('gamza:detail:close', (e) => {
+      log(`👈 [gamza:detail:close] 상품 닫힘`);
+    });
+
+    window.addEventListener('gamza:detail:like', (e) => {
+      log(`❤️ [gamza:detail:like] 관심 토글 - ID: ${e.detail.productId}, 관심여부: ${e.detail.liked}, 총 관심수: ${e.detail.likeCount}`);
+    });
+
+    window.addEventListener('gamza:detail:chat', (e) => {
+      log(`💬 [gamza:detail:chat] 채팅 시도 - 상품 ID: ${e.detail.productId}`);
+    });
+  </script>
+</body>
+</html>

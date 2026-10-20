@@ -1,0 +1,131 @@
+<!-- [화면 1] 감자(Gamza) 상품 목록 영역 템플릿 및 헤더 -->
+<div class="gamza-product-list-container" id="gamza-product-list-container">
+  <!-- 상단 헤더 -->
+  <header class="gamza-header" id="gamza-header">
+    <div class="header-inner">
+      <!-- 로고 -->
+      <a href="#" class="header-logo" id="header-logo" title="감자 홈으로 이동">
+        <span class="logo-emoji" aria-hidden="true">🥔</span>
+        <div class="logo-brand">
+          <span class="logo-title">감자</span>
+          <span class="logo-badge">마켓</span>
+        </div>
+      </a>
+
+      <!-- 통합 검색창 -->
+      <div class="header-search-wrap">
+        <div class="search-input-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="search" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="동네 이름, 물품명 등을 검색해보세요" 
+            autocomplete="off" 
+            aria-label="상품명 또는 동네 검색"
+          />
+          <button type="button" id="btn-clear-search" class="btn-clear-search" aria-label="검색어 지우기" style="display: none;">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 우측 액션 버튼들 -->
+      <div class="header-actions">
+        <button type="button" id="btn-open-write" class="btn-header-write" aria-label="새 상품 판매글 쓰기">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span class="btn-text">글쓰기</span>
+        </button>
+        <button type="button" id="btn-login" class="btn-header-login">
+          <span>로그인</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 상품 목록 컨텐츠 -->
+  <main class="gamza-main-wrap">
+    <!-- 카테고리 필터 영역 -->
+    <nav class="category-nav-wrap" aria-label="상품 카테고리 선택">
+      <div class="category-scroll-container" id="category-filter-list">
+        <button type="button" class="category-chip active" data-category="전체">
+          <span class="chip-icon">✨</span>
+          <span class="chip-text">전체</span>
+        </button>
+        <button type="button" class="category-chip" data-category="디지털기기">
+          <span class="chip-icon">📱</span>
+          <span class="chip-text">디지털기기</span>
+        </button>
+        <button type="button" class="category-chip" data-category="가구/인테리어">
+          <span class="chip-icon">🪑</span>
+          <span class="chip-text">가구/인테리어</span>
+        </button>
+        <button type="button" class="category-chip" data-category="의류">
+          <span class="chip-icon">👕</span>
+          <span class="chip-text">의류</span>
+        </button>
+        <button type="button" class="category-chip" data-category="생활가전">
+          <span class="chip-icon">🔌</span>
+          <span class="chip-text">생활가전</span>
+        </button>
+        <button type="button" class="category-chip" data-category="도서/티켓">
+          <span class="chip-icon">📚</span>
+          <span class="chip-text">도서/티켓</span>
+        </button>
+        <button type="button" class="category-chip" data-category="기타">
+          <span class="chip-icon">🥔</span>
+          <span class="chip-text">기타</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 필터 컨트롤 바 (상품 수 & 거래 가능 토글) -->
+    <section class="filter-controls-bar">
+      <div class="filter-left-info">
+        <span class="result-label">따뜻한 감자 매물</span>
+        <span class="result-count" id="product-count">총 <strong>0</strong>개</span>
+      </div>
+      
+      <div class="filter-right-tools">
+        <label class="toggle-available-container" for="toggle-available-only" title="거래 완료된 상품 숨기기">
+          <input type="checkbox" id="toggle-available-only" class="toggle-checkbox" />
+          <span class="toggle-switch-slider" aria-hidden="true"></span>
+          <span class="toggle-label-text">거래 가능만 보기</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 상품 카드 그리드 -->
+    <section class="product-grid-section">
+      <div id="product-grid" class="product-grid" role="region" aria-live="polite">
+        <!-- 자바스크립트로 상품 카드들이 동적으로 렌더링됩니다 -->
+      </div>
+
+      <!-- 검색/필터 결과 없음 (Empty State) -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-illustration">🥔💨</div>
+        <h3 class="empty-title">찾으시는 상품이 없어요</h3>
+        <p class="empty-desc">검색어를 다른 단어로 바꾸거나 카테고리 필터를 변경해 보세요.</p>
+        <button type="button" id="btn-reset-filters" class="btn-reset-filters">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>필터 초기화</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 가벼운 안내 토스트 메시지 컴포넌트 -->
+  <div id="gamza-toast" class="gamza-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+</div>

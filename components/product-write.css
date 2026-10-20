@@ -1,0 +1,1009 @@
+/* ========================================================
+   감자(Gamza) 중고거래 - [화면 3: 글쓰기 모달 스타일]
+   파일명: components/product-write.css
+======================================================== */
+
+:root {
+  /* 감자 시그니처 컬러 팔레트 */
+  --gamza-brown-dark: #5C382D;
+  --gamza-primary: #8D5B4C;        /* 감자 껍질 브라운 */
+  --gamza-primary-hover: #734538;
+  --gamza-caramel: #C68B59;        /* 구운 감자 캐러멜 브라운 */
+  --gamza-caramel-hover: #B57947;
+  --gamza-highlight: #F4A261;      /* 따뜻한 감자 속살 오렌지 */
+  --gamza-highlight-soft: #FDE8D3;
+  --gamza-sprout-green: #2A9D8F;    /* 파릇파릇 새싹 그린 */
+
+  /* 시선을 사로잡는 밝은 노란색 포인트 팔레트 */
+  --gamza-point-yellow: #FFC700;
+  --gamza-point-yellow-hover: #EBB600;
+  --gamza-point-yellow-light: #FFF8D6;
+  --gamza-point-yellow-border: #FFE066;
+  --gamza-point-yellow-text: #735000;
+  
+  /* 배경 & 서페이스 (따뜻하고 포근한 베이지 톤) */
+  --gamza-bg-cream: #FDFBF7;
+  --gamza-bg-surface: #FFFFFF;
+  --gamza-bg-warm-gray: #F7F3EE;
+  --gamza-bg-hover: #EFE7DE;
+  --gamza-border-color: #E8DFD6;
+  --gamza-border-focus: var(--gamza-point-yellow);
+
+  /* 텍스트 컬러 */
+  --gamza-text-main: #2D231E;
+  --gamza-text-sub: #685950;
+  --gamza-text-muted: #9E9188;
+  --gamza-text-inverse: #FFFFFF;
+
+  /* 상태 컬러 */
+  --gamza-danger: #E76F51;
+  --gamza-danger-bg: #FDEDEA;
+  --gamza-success: #2A9D8F;
+  --gamza-success-bg: #E7F6F4;
+  --gamza-badge-gray: #9E9188;
+
+  /* 모달 & 깊이감 */
+  --gamza-modal-backdrop: rgba(45, 35, 30, 0.55);
+  --gamza-shadow-sm: 0 2px 8px rgba(141, 91, 76, 0.08);
+  --gamza-shadow-md: 0 8px 24px rgba(141, 91, 76, 0.12);
+  --gamza-shadow-lg: 0 20px 48px rgba(45, 35, 30, 0.22);
+  --gamza-focus-ring: 0 0 0 3px rgba(255, 199, 0, 0.4);
+
+  /* 폰트 & 라운딩 */
+  --gamza-font-family: -apple-system, BlinkMacSystemFont, "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
+  --gamza-radius-sm: 8px;
+  --gamza-radius-md: 14px;
+  --gamza-radius-lg: 20px;
+  --gamza-radius-full: 9999px;
+  --gamza-transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 유틸리티 */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ========================================================
+   모달 백드롭 (배경 오버레이)
+======================================================== */
+.gamza-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gamza-modal-backdrop);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.gamza-modal-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 모달 컨테이너 (다이얼로그 카드) */
+.gamza-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gamza-bg-cream);
+  border-radius: var(--gamza-radius-lg);
+  box-shadow: var(--gamza-shadow-lg);
+  border: 1px solid rgba(232, 223, 214, 0.8);
+  overflow: hidden;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  font-family: var(--gamza-font-family);
+  color: var(--gamza-text-main);
+}
+
+.gamza-modal-backdrop.is-open .gamza-modal-container {
+  transform: translateY(0) scale(1);
+}
+
+/* ========================================================
+   모달 헤더
+======================================================== */
+.gamza-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 22px 24px 18px 24px;
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--gamza-bg-cream) 100%);
+  border-bottom: 1px solid var(--gamza-border-color);
+  flex-shrink: 0;
+}
+
+.header-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gamza-point-yellow-text);
+  background-color: var(--gamza-point-yellow-light);
+  border: 1px solid var(--gamza-point-yellow-border);
+  padding: 3px 10px;
+  border-radius: var(--gamza-radius-full);
+  width: fit-content;
+}
+
+.header-badge .badge-icon {
+  font-size: 13px;
+}
+
+.modal-title {
+  margin: 2px 0 0 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--gamza-brown-dark);
+}
+
+.modal-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--gamza-text-sub);
+}
+
+.modal-close-btn {
+  background: var(--gamza-bg-warm-gray);
+  border: 1px solid var(--gamza-border-color);
+  color: var(--gamza-text-sub);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--gamza-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--gamza-transition-smooth);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.modal-close-btn:hover {
+  background: var(--gamza-bg-hover);
+  color: var(--gamza-brown-dark);
+  transform: rotate(90deg);
+}
+
+.modal-close-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--gamza-focus-ring);
+}
+
+/* ========================================================
+   모달 바디 (스크롤 영역)
+======================================================== */
+.gamza-write-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gamza-modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 미려하게 커스텀 */
+.gamza-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.gamza-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gamza-modal-body::-webkit-scrollbar-thumb {
+  background: #D9CECE;
+  border-radius: var(--gamza-radius-full);
+}
+.gamza-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--gamza-caramel);
+}
+
+/* ========================================================
+   공통 폼 섹션 및 라벨
+======================================================== */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gamza-text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.required-mark {
+  color: var(--gamza-danger);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.label-badge.optional {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gamza-text-muted);
+  background-color: var(--gamza-bg-warm-gray);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.label-guide {
+  font-size: 12px;
+  color: var(--gamza-caramel);
+  font-weight: 500;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: var(--gamza-text-muted);
+}
+
+.char-counter strong {
+  color: var(--gamza-primary);
+}
+
+/* ========================================================
+   1. 이미지 업로드 & 미리보기 드롭존
+======================================================== */
+.image-uploader-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.image-dropzone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background-color: #FFFFFF;
+  border: 2px dashed var(--gamza-border-color);
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  transition: var(--gamza-transition-smooth);
+  outline: none;
+}
+
+.image-dropzone:hover,
+.image-dropzone:focus-visible {
+  border-color: var(--gamza-caramel);
+  background-color: #FFFDF9;
+}
+
+.image-dropzone.is-dragover {
+  border-color: var(--gamza-primary);
+  background-color: var(--gamza-highlight-soft);
+  transform: scale(1.01);
+}
+
+/* 이미지 프리뷰 박스 */
+.preview-display {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  min-width: 104px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--gamza-bg-warm-gray);
+  border: 1px solid var(--gamza-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.default-potato-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #FFFDF8 0%, #F5ECE3 100%);
+  position: relative;
+}
+
+.default-potato-wrap .potato-svg-art {
+  width: 82px;
+  height: 82px;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 6px rgba(141, 91, 76, 0.15));
+}
+
+.default-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(198, 139, 89, 0.3);
+  padding: 1px 6px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* 업로드된 실물 이미지 */
+.uploaded-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.preview-display:hover .uploaded-img {
+  transform: scale(1.04);
+}
+
+/* 업로더 안내 문구 및 액션 버튼 */
+.uploader-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.drop-primary-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gamza-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.drop-primary-text .highlight-link {
+  color: var(--gamza-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.drop-sub-text {
+  margin: 3px 0 0 0;
+  font-size: 12px;
+  color: var(--gamza-text-muted);
+}
+
+.uploader-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gamza-brown-dark);
+  background-color: var(--gamza-bg-warm-gray);
+  border: 1px solid var(--gamza-border-color);
+  padding: 7px 12px;
+  border-radius: var(--gamza-radius-full);
+  cursor: pointer;
+  transition: var(--gamza-transition-smooth);
+}
+
+.btn-chip:hover {
+  background-color: var(--gamza-highlight-soft);
+  border-color: var(--gamza-caramel);
+  color: var(--gamza-primary);
+}
+
+.btn-chip.btn-chip-sub {
+  color: var(--gamza-danger);
+  border-color: rgba(231, 111, 81, 0.3);
+  background-color: #FFF6F4;
+}
+
+.btn-chip.btn-chip-sub:hover {
+  background-color: var(--gamza-danger-bg);
+  border-color: var(--gamza-danger);
+}
+
+/* ========================================================
+   인풋, 셀렉트, 텍스트에어리어 기본 스타일
+======================================================== */
+.gamza-input,
+.gamza-select,
+.gamza-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--gamza-text-main);
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--gamza-border-color);
+  border-radius: var(--gamza-radius-md);
+  padding: 13px 16px;
+  transition: var(--gamza-transition-smooth);
+  outline: none;
+}
+
+.gamza-input::placeholder,
+.gamza-textarea::placeholder {
+  color: var(--gamza-text-muted);
+  font-weight: 400;
+}
+
+.gamza-input:focus,
+.gamza-select:focus,
+.gamza-textarea:focus {
+  border-color: var(--gamza-border-focus);
+  box-shadow: var(--gamza-focus-ring);
+  background-color: #FFFFFF;
+}
+
+/* 유효성 에러 시 */
+.gamza-input.has-error,
+.gamza-select.has-error,
+.gamza-textarea.has-error {
+  border-color: var(--gamza-danger) !important;
+  background-color: #FFFDFD;
+  animation: gamzaShake 0.3s ease;
+}
+
+.field-error-msg {
+  font-size: 12px;
+  color: var(--gamza-danger);
+  font-weight: 600;
+  min-height: 16px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* ========================================================
+   2. 셀렉트 박스 커스텀
+======================================================== */
+.select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.gamza-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 44px;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--gamza-text-muted);
+  display: flex;
+  align-items: center;
+  transition: var(--gamza-transition-smooth);
+}
+
+.select-wrap:hover .select-arrow {
+  color: var(--gamza-caramel);
+}
+
+/* ========================================================
+   3. 가격 입력 및 무료 나눔
+======================================================== */
+.free-share-toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-ui-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gamza-primary);
+  background: var(--gamza-highlight-soft);
+  padding: 5px 12px;
+  border-radius: var(--gamza-radius-full);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--gamza-transition-smooth);
+  border: 1px solid rgba(198, 139, 89, 0.35);
+}
+
+.checkbox-ui-label:hover {
+  background: #FADBBF;
+  border-color: var(--gamza-caramel);
+}
+
+.check-box-icon {
+  width: 14px;
+  height: 14px;
+  border: 1.8px solid var(--gamza-primary);
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  background: #FFFFFF;
+  transition: var(--gamza-transition-smooth);
+}
+
+.custom-checkbox:checked + .checkbox-ui-label {
+  background: var(--gamza-primary);
+  color: #FFFFFF;
+  border-color: var(--gamza-primary);
+}
+
+.custom-checkbox:checked + .checkbox-ui-label .check-box-icon {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+.custom-checkbox:checked + .checkbox-ui-label .check-box-icon::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 4px;
+  height: 7px;
+  border: solid var(--gamza-primary);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.price-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-prefix {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gamza-caramel);
+  pointer-events: none;
+}
+
+.currency-suffix {
+  position: absolute;
+  right: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gamza-text-muted);
+  pointer-events: none;
+}
+
+.price-input {
+  padding-left: 36px;
+  padding-right: 42px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.price-input:disabled {
+  background-color: var(--gamza-bg-warm-gray);
+  color: var(--gamza-text-muted);
+  cursor: not-allowed;
+  border-color: var(--gamza-border-color);
+}
+
+/* 실시간 한글 금액 안내 바 */
+.price-live-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid var(--gamza-border-color);
+  width: fit-content;
+}
+
+.preview-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gamza-caramel);
+  background-color: var(--gamza-highlight-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.live-price-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+}
+
+/* ========================================================
+   4. 거래 희망 동네 & 빠른 칩
+======================================================== */
+.location-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-inline-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--gamza-primary);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.gamza-input.with-left-icon {
+  padding-left: 40px;
+}
+
+.quick-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.chips-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gamza-text-muted);
+}
+
+.chips-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip-item {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gamza-text-sub);
+  background-color: #FFFFFF;
+  border: 1px solid var(--gamza-border-color);
+  border-radius: var(--gamza-radius-full);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: var(--gamza-transition-smooth);
+}
+
+.chip-item:hover {
+  background-color: var(--gamza-highlight-soft);
+  border-color: var(--gamza-caramel);
+  color: var(--gamza-primary);
+}
+
+.chip-item.is-selected {
+  background-color: var(--gamza-primary);
+  border-color: var(--gamza-primary);
+  color: #FFFFFF;
+}
+
+/* ========================================================
+   5. 판매 상태 세그먼트 버튼 (라디오)
+======================================================== */
+.status-segmented-control {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background-color: var(--gamza-bg-warm-gray);
+  padding: 6px;
+  border-radius: var(--gamza-radius-md);
+  border: 1px solid var(--gamza-border-color);
+}
+
+.segmented-item {
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+}
+
+.segmented-item input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.segmented-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  background-color: transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gamza-text-sub);
+  transition: var(--gamza-transition-smooth);
+  user-select: none;
+}
+
+.segmented-item:hover .segmented-btn {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: var(--gamza-text-main);
+}
+
+/* 선택된 라디오 상태 */
+.segmented-item input[type="radio"]:checked + .segmented-btn {
+  background-color: #FFFFFF;
+  color: var(--gamza-brown-dark);
+  font-weight: 800;
+  box-shadow: var(--gamza-shadow-sm);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.green { background-color: var(--gamza-sprout-green); }
+.status-dot.orange { background-color: var(--gamza-highlight); }
+.status-dot.gray { background-color: var(--gamza-badge-gray); }
+
+/* ========================================================
+   6. 자세한 설명 텍스트에어리어
+======================================================== */
+.gamza-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ========================================================
+   모달 푸터
+======================================================== */
+.gamza-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--gamza-border-color);
+  flex-shrink: 0;
+}
+
+.gamza-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--gamza-radius-full);
+  cursor: pointer;
+  transition: var(--gamza-transition-smooth);
+  border: none;
+  outline: none;
+}
+
+.gamza-btn.btn-cancel {
+  background-color: var(--gamza-bg-warm-gray);
+  color: var(--gamza-text-sub);
+  border: 1px solid var(--gamza-border-color);
+}
+
+.gamza-btn.btn-cancel:hover {
+  background-color: var(--gamza-bg-hover);
+  color: var(--gamza-text-main);
+}
+
+.gamza-btn.btn-submit {
+  background: var(--gamza-point-yellow);
+  color: var(--gamza-brown-dark);
+  font-weight: 800;
+  border: 1px solid var(--gamza-point-yellow-border);
+  box-shadow: 0 4px 14px rgba(255, 199, 0, 0.4);
+  min-width: 140px;
+}
+
+.gamza-btn.btn-submit:hover {
+  background: var(--gamza-point-yellow-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 199, 0, 0.52);
+}
+
+.gamza-btn.btn-submit:active {
+  transform: translateY(1px);
+}
+
+.gamza-btn:focus-visible {
+  box-shadow: var(--gamza-focus-ring);
+}
+
+.submit-potato-icon {
+  font-size: 17px;
+}
+
+/* ========================================================
+   성공 / 에러 토스트 메시지
+======================================================== */
+.gamza-toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+  width: 90%;
+  max-width: 440px;
+}
+
+.gamza-toast {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background-color: #2D231E;
+  color: #FFFFFF;
+  border-radius: var(--gamza-radius-full);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  font-family: var(--gamza-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.gamza-toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.gamza-toast .toast-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.gamza-toast.toast-success {
+  background: linear-gradient(135deg, #3A2E28 0%, #2D231E 100%);
+  border: 1px solid rgba(244, 162, 97, 0.4);
+}
+
+.gamza-toast.toast-error {
+  background: linear-gradient(135deg, #8E3321 0%, #5E1A0D 100%);
+  border: 1px solid rgba(231, 111, 81, 0.5);
+}
+
+/* ========================================================
+   애니메이션 키프레임
+======================================================== */
+@keyframes gamzaShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* ========================================================
+   반응형 미디어 쿼리 (스마트폰 & 모바일 최적화)
+======================================================== */
+@media (max-width: 640px) {
+  .gamza-modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .gamza-modal-container {
+    max-width: 100%;
+    max-height: 94vh;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+  }
+
+  .gamza-modal-backdrop.is-open .gamza-modal-container {
+    transform: translateY(0);
+  }
+
+  .gamza-modal-header {
+    padding: 18px 20px 14px 20px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+
+  .gamza-modal-body {
+    padding: 18px 20px 24px 20px;
+    gap: 18px;
+  }
+
+  .image-dropzone {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .preview-display {
+    margin: 0 auto;
+  }
+
+  .drop-primary-text {
+    justify-content: center;
+  }
+
+  .uploader-actions {
+    justify-content: center;
+  }
+
+  .gamza-modal-footer {
+    padding: 12px 18px 18px 18px;
+  }
+
+  .gamza-btn {
+    flex: 1;
+    height: 46px;
+    font-size: 14px;
+  }
+}

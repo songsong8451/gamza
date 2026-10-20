@@ -1,0 +1,159 @@
+<!-- [화면 2] 감자(Gamza) 상품 상세 모달 팝업 컴포넌트 -->
+<div id="gamza-detail-modal" class="gamza-modal" role="dialog" aria-modal="true" aria-labelledby="gamza-detail-title" hidden>
+  <!-- 모달 배경 어두운 오버레이 -->
+  <div class="gamza-modal-backdrop" data-action="close" aria-hidden="true"></div>
+
+  <!-- 모달 메인 컨테이너 -->
+  <div class="gamza-modal-container" role="document">
+    
+    <!-- 상단 우측 닫기(X) 버튼 -->
+    <button type="button" class="gamza-modal-close-btn gamza-detail-close-btn" data-action="close" aria-label="팝업 닫기" title="닫기 (ESC)">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- 스크롤 가능한 본문 영역 -->
+    <div class="gamza-modal-scrollable">
+      
+      <!-- 위쪽 절반: 큰 상품 이미지 -->
+      <div class="gamza-detail-media-wrap">
+        <img 
+          id="gamza-detail-image" 
+          class="gamza-detail-image" 
+          src="" 
+          alt="상품 대표 이미지" 
+          loading="eager"
+        />
+        <div class="gamza-image-fallback" id="gamza-image-fallback" style="display: none;" aria-hidden="true">
+          <span class="fallback-icon">🥔</span>
+          <span class="fallback-text">이미지를 불러올 수 없습니다</span>
+        </div>
+        <div class="gamza-image-gradient-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- 본문 내용 래퍼 -->
+      <div class="gamza-detail-content">
+        
+        <!-- 1) 판매 상태 뱃지 & 카테고리 태그 -->
+        <div class="gamza-detail-meta-row">
+          <span id="gamza-detail-status" class="gamza-badge gamza-badge--sale">판매중</span>
+          <span id="gamza-detail-category" class="gamza-category-tag">식품/농산물</span>
+        </div>
+
+        <!-- 2) 상품명 (굵고 가독성 높은 타이틀) -->
+        <h2 id="gamza-detail-title" class="gamza-detail-title">강원도 햇감자 10kg</h2>
+
+        <!-- 3) 판매 위치 & 업로드 시간 (연한 텍스트 캡션) -->
+        <div class="gamza-detail-submeta">
+          <span class="gamza-submeta-item gamza-location-item">
+            <svg class="submeta-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span id="gamza-detail-location">강원도 춘천시 퇴계동</span>
+          </span>
+          <span class="gamza-submeta-divider" aria-hidden="true">•</span>
+          <span class="gamza-submeta-item gamza-time-item">
+            <svg class="submeta-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="gamza-detail-time">방금 전</span>
+          </span>
+        </div>
+
+        <!-- 4) 가격 (눈에 띄는 크기의 원화 표시) -->
+        <div class="gamza-detail-price-wrap">
+          <span id="gamza-detail-price" class="gamza-detail-price">18,000</span>
+          <span class="gamza-price-unit">원</span>
+        </div>
+
+        <div class="gamza-detail-divider" aria-hidden="true"></div>
+
+        <!-- 5) 상품 설명 (상세 설명 텍스트) -->
+        <div class="gamza-detail-desc-wrap">
+          <h3 class="gamza-section-title">상품 설명</h3>
+          <p id="gamza-detail-description" class="gamza-detail-description">
+            방금 수확한 포슬포슬 맛있는 강원도 햇감자입니다. 직거래 환영해요!
+          </p>
+        </div>
+
+        <div class="gamza-detail-divider" aria-hidden="true"></div>
+
+        <!-- 판매자 정보 영역 -->
+        <div class="gamza-seller-card" id="gamza-seller-card">
+          <div class="gamza-seller-main">
+            <div class="gamza-seller-avatar-wrap">
+              <img id="gamza-seller-avatar" class="gamza-seller-avatar" src="" alt="판매자 프로필" />
+              <span class="gamza-seller-potato-badge" title="따뜻한 감자 이웃">🥔</span>
+            </div>
+            <div class="gamza-seller-info">
+              <div class="gamza-seller-name-row">
+                <span id="gamza-seller-name" class="gamza-seller-name">감자왕김감자</span>
+                <span class="gamza-verified-badge" title="동네 인증 완료">동네인증</span>
+              </div>
+              <span id="gamza-seller-location" class="gamza-seller-location">춘천시 퇴계동</span>
+            </div>
+          </div>
+
+          <!-- 감자 서비스 감성 요소: 매너온도/감자지수 -->
+          <div class="gamza-warmth-card" id="gamza-warmth-card">
+            <div class="gamza-warmth-header">
+              <div class="gamza-warmth-title-group">
+                <span class="gamza-warmth-emoji" aria-hidden="true">🔥</span>
+                <span class="gamza-warmth-label">감자 지수</span>
+              </div>
+              <span id="gamza-warmth-temp" class="gamza-warmth-temp">따뜻한 감자 99℃</span>
+            </div>
+            
+            <div class="gamza-warmth-bar-track" role="progressbar" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100">
+              <div id="gamza-warmth-bar-fill" class="gamza-warmth-bar-fill" style="width: 99%;"></div>
+            </div>
+
+            <div class="gamza-warmth-footer">
+              <span id="gamza-warmth-message" class="gamza-warmth-message">포슬포슬 맛있게 잘 익은 최고 감자예요! 🥔✨</span>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- // gamza-detail-content -->
+    </div> <!-- // gamza-modal-scrollable -->
+
+    <!-- 하단 고정 버튼 바 -->
+    <footer class="gamza-detail-footer">
+      <!-- 관심 추가 버튼 -->
+      <button 
+        type="button" 
+        id="btn-gamza-detail-like" 
+        class="gamza-btn-like" 
+        aria-label="관심 목록에 추가"
+        aria-pressed="false"
+      >
+        <span class="like-icon-wrap" aria-hidden="true">
+          <svg class="like-heart-icon" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </span>
+        <span id="gamza-detail-like-count" class="like-count-text">0</span>
+      </button>
+
+      <!-- 채팅 시작하기 버튼 -->
+      <button 
+        type="button" 
+        id="btn-gamza-detail-chat" 
+        class="gamza-btn-chat"
+      >
+        <svg class="chat-btn-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span class="chat-btn-text">채팅 시작하기</span>
+      </button>
+    </footer>
+
+    <!-- 모달 내 토스트 알림 메시지 -->
+    <div id="gamza-detail-toast" class="gamza-detail-toast" role="status" aria-live="polite"></div>
+
+  </div> <!-- // gamza-modal-container -->
+</div>

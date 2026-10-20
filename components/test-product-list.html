@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자(Gamza) - 상품 목록 테스트</title>
+  <link rel="stylesheet" href="./product-list.css" />
+  <style>
+    /* 데모 페이지 전용 리셋 및 콘솔 로그 디스플레이 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #FDFBF7;
+    }
+    #debug-panel {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      max-width: 360px;
+      background: rgba(45, 35, 30, 0.95);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: monospace;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid #C68B59;
+    }
+    #debug-panel h4 {
+      color: #F4A261;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <!-- product-list.html 컴포넌트 내용 인라인 삽입 -->
+  <!--#include file="product-list.html" -->
+  <div id="component-root"></div>
+
+  <!-- 이벤트 리스너 테스트용 디버그 패널 -->
+  <div id="debug-panel">
+    <h4>🥔 이벤트 모니터링</h4>
+    <div id="event-log">상세보기나 글쓰기를 클릭해보세요.</div>
+  </div>
+
+  <script src="./product-list.js"></script>
+  <script>
+    // product-list.html 동적 로드 후 초기화
+    fetch('./product-list.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('component-root').innerHTML = html;
+        window.GamzaProductList.init();
+      })
+      .catch(err => {
+        console.error('컴포넌트 로드 실패:', err);
+      });
+
+    // 이벤트 리스너 등록 테스트
+    const logEl = document.getElementById('event-log');
+    window.addEventListener('gamza:open-detail', (e) => {
+      console.log('감자 상품 상세 오픈:', e.detail);
+      logEl.innerHTML = `<strong>[gamza:open-detail]</strong><br>ID: ${e.detail.id}<br>제목: ${e.detail.title}<br>가격: ${e.detail.price}원<br>상태: ${e.detail.status}`;
+    });
+
+    window.addEventListener('gamza:open-write', (e) => {
+      console.log('감자 글쓰기 모달 열기 요청:', e.detail);
+      logEl.innerHTML = `<strong>[gamza:open-write]</strong><br>새 판매글 작성 모달 요청됨!`;
+    });
+  </script>
+</body>
+</html>
